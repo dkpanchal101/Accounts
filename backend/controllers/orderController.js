@@ -43,9 +43,7 @@ export const createOrder = async (req, res) => {
     const {
       customerName,
       phone,
-      bannerType,
       size,
-      description,
       totalAmount,
       advanceAmount,
       orderDate,
@@ -60,9 +58,7 @@ export const createOrder = async (req, res) => {
     const order = await Order.create({
       customerName,
       phone,
-      bannerType,
       size,
-      description,
       totalAmount,
       advanceAmount: advanceAmount || 0,
       orderDate: orderDate ? new Date(orderDate) : new Date(),
@@ -81,9 +77,7 @@ export const updateOrder = async (req, res) => {
     const {
       customerName,
       phone,
-      bannerType,
       size,
-      description,
       totalAmount,
       advanceAmount,
       orderDate,
@@ -100,9 +94,7 @@ export const updateOrder = async (req, res) => {
     // Update fields only if provided
     if (customerName !== undefined) order.customerName = customerName;
     if (phone !== undefined) order.phone = phone;
-    if (bannerType !== undefined) order.bannerType = bannerType;
     if (size !== undefined) order.size = size;
-    if (description !== undefined) order.description = description;
     if (totalAmount !== undefined) order.totalAmount = parseFloat(totalAmount);
     if (advanceAmount !== undefined) order.advanceAmount = parseFloat(advanceAmount);
     if (orderDate !== undefined) order.orderDate = orderDate ? new Date(orderDate) : order.orderDate;

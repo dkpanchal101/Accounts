@@ -11,16 +11,7 @@ const orderSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  bannerType: {
-    type: String,
-    enum: ['Stage Banner', 'Flex', 'Digital Art'],
-    default: 'Stage Banner'
-  },
   size: {
-    type: String,
-    trim: true
-  },
-  description: {
     type: String,
     trim: true
   },

@@ -12,9 +12,7 @@ const OrderForm = () => {
   const [formData, setFormData] = useState({
     customerName: '',
     phone: '',
-    bannerType: 'Stage Banner',
     size: '',
-    description: '',
     totalAmount: '',
     advanceAmount: '',
     orderDate: new Date().toISOString().split('T')[0],
@@ -35,9 +33,7 @@ const OrderForm = () => {
       setFormData({
         customerName: order.customerName || '',
         phone: order.phone || '',
-        bannerType: order.bannerType || 'Stage Banner',
         size: order.size || '',
-        description: order.description || '',
         totalAmount: order.totalAmount || '',
         advanceAmount: order.advanceAmount || '',
         orderDate: order.orderDate ? new Date(order.orderDate).toISOString().split('T')[0] : '',

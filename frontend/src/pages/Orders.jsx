@@ -201,7 +201,7 @@ const Orders = () => {
               <tbody className="divide-y divide-slate-200 dark:divide-slate-700">
                 {orders.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
+                    <td colSpan="6" className="px-6 py-8 text-center text-slate-600 dark:text-slate-400">
                       No orders found
                     </td>
                   </tr>
@@ -218,9 +218,6 @@ const Orders = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
                         {order.phone}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
-                        {order.bannerType || 'N/A'}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-300">
                         ₹{order.totalAmount?.toLocaleString('en-IN') || 0}
