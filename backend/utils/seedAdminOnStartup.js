@@ -3,8 +3,17 @@ import User from '../models/User.js';
 
 const seedAdmin = async () => {
   try {
-    // Wait a bit for MongoDB connection to be ready
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Wait for MongoDB connection to be ready
+    let retries = 10;
+    while (retries > 0 && mongoose.connection.readyState !== 1) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+      retries--;
+    }
+    
+    if (mongoose.connection.readyState !== 1) {
+      console.error('❌ MongoDB not connected, cannot seed admin');
+      return;
+    }
     
     // Check if admin already exists
     const adminExists = await User.findOne({ username: 'admin' });
@@ -26,9 +35,9 @@ const seedAdmin = async () => {
     console.log('   ⚠️  IMPORTANT: Change the default password after first login!');
   } catch (error) {
     console.error('❌ Error auto-seeding admin:', error.message);
+    console.error('   Full error:', error);
     // Don't exit - let server continue running
   }
 };
 
 export default seedAdmin;
-

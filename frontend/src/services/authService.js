@@ -1,12 +1,19 @@
 import api from './api';
 
 export const login = async (username, password) => {
-  const response = await api.post('/auth/login', { username, password });
-  if (response.data.token) {
-    localStorage.setItem('token', response.data.token);
-    localStorage.setItem('user', JSON.stringify(response.data));
+  try {
+    console.log('🔐 Attempting login for:', username);
+    const response = await api.post('/auth/login', { username, password });
+    if (response.data.token) {
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data));
+      console.log('✅ Login successful');
+    }
+    return response.data;
+  } catch (error) {
+    console.error('❌ Login error:', error.response?.status, error.response?.data || error.message);
+    throw error;
   }
-  return response.data;
 };
 
 export const logout = () => {
