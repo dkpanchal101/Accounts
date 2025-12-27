@@ -2,13 +2,21 @@ import axios from 'axios';
 
 // Ensure API URL always ends with /api
 const getApiUrl = () => {
-  const envUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  let envUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  
   // Remove trailing slash if present
-  const cleanUrl = envUrl.replace(/\/$/, '');
-  // Add /api if not already present
-  const apiUrl = cleanUrl.endsWith('/api') ? cleanUrl : `${cleanUrl}/api`;
-  console.log('🔗 API Base URL:', apiUrl);
-  return apiUrl;
+  envUrl = envUrl.replace(/\/$/, '');
+  
+  // Always add /api if not already present
+  // Check if URL ends with /api (case insensitive)
+  if (!envUrl.toLowerCase().endsWith('/api')) {
+    envUrl = `${envUrl}/api`;
+  }
+  
+  console.log('🔗 API Base URL configured:', envUrl);
+  console.log('🔗 Environment VITE_API_URL:', import.meta.env.VITE_API_URL || 'not set');
+  
+  return envUrl;
 };
 
 const API_URL = getApiUrl();
@@ -20,13 +28,16 @@ const api = axios.create({
   }
 });
 
-// Add token to requests
+// Add token to requests and log requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    // Log the full URL being called
+    const fullUrl = `${config.baseURL}${config.url}`;
+    console.log(`📤 Request: ${config.method?.toUpperCase()} ${fullUrl}`);
     return config;
   },
   (error) => {
