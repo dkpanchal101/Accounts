@@ -4,10 +4,14 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
+import seedAdmin from './utils/seedAdminOnStartup.js';
 
 dotenv.config();
 
-connectDB();
+connectDB().then(() => {
+  // Auto-seed admin user on startup if it doesn't exist
+  seedAdmin();
+});
 
 const app = express();
 

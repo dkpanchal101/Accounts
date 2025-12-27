@@ -11,6 +11,8 @@ const connectDB = async () => {
     
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database: ${conn.connection.name}`);
+    
+    return conn;
   } catch (error) {
     console.error('❌ MongoDB Connection Error:');
     
@@ -19,7 +21,6 @@ const connectDB = async () => {
       console.error('     1. Username and password in MONGODB_URI');
       console.error('     2. Replace <db_password> with actual password');
       console.error('     3. URL-encode special characters in password (@ → %40, # → %23, etc.)');
-      console.error('   See backend/FIX_ENV.md for detailed instructions');
     } else if (error.message.includes('ENOTFOUND') || error.message.includes('getaddrinfo')) {
       console.error('   → Cannot reach MongoDB server. Check:');
       console.error('     1. Internet connection');

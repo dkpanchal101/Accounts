@@ -11,7 +11,13 @@ export const login = async (req, res) => {
 
     const user = await User.findOne({ username });
 
-    if (user && (await user.matchPassword(password))) {
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    const isPasswordMatch = await user.matchPassword(password);
+    
+    if (isPasswordMatch) {
       res.json({
         _id: user._id,
         username: user.username,
@@ -21,6 +27,7 @@ export const login = async (req, res) => {
       res.status(401).json({ message: 'Invalid credentials' });
     }
   } catch (error) {
+    console.error('Login error:', error);
     res.status(500).json({ message: error.message });
   }
 };
